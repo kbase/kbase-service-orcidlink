@@ -8,6 +8,7 @@ from orcidlink.lib.logger import JSONLogger
 
 @pytest.fixture
 def fake_fs(fs):
+    fs.create_dir("/bar")
     yield fs
 
 
@@ -25,12 +26,12 @@ def fake_fs(fs):
 #     assert log["event"]["data"] == {"bar": "baz"}
 
 
-def test_JSONLogger():
-    logger = JSONLogger("foo")
+def test_JSONLogger(fake_fs):
+    logger = JSONLogger("/bar", "foo")
     logger.log_level(logging.DEBUG)
     log_id = logger.log_event("foo", {"bar": "baz"})
     assert isinstance(log_id, str)
-    with open("/tmp/foo.log", "r") as fin:
+    with open("/bar/foo.log", "r") as fin:
         log = json.load(fin)
     assert log["event"]["name"] == "foo"
     assert log["event"]["data"] == {"bar": "baz"}

@@ -30,7 +30,19 @@ run test
 
 ## Running server locally 
 
-> TODO
+build image
+
+```shell
+./Taskfile build-image
+```
+
+run image
+
+> doesn't work as is -- needs mongo!
+
+```shell
+ORCID_CLIENT_ID='AAA' ORCID_CLIENT_SECRET='BBB' ./Taskfile run-image
+```
 
 ## Running server locally with kbase-ui
 

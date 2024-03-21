@@ -1,14 +1,16 @@
 #
 # A dockerfile which simulates production better than the main dockerfile, which is for development.
 #
-version: '3.6'
+version: '3.8'
+name: kbase-dev
 networks:
   kbase-dev:
     name: kbase-dev
 services:
   orcidlink:
-    build:
-      context: .
+    # build:
+    #   context: .
+    image: kbase/orcidlink:dev
     container_name: orcidlink
     hostname: orcidlink
     dns: 8.8.8.8
@@ -21,6 +23,7 @@ services:
       # this port for poking at the API during development.
       - "5003:5000"
     environment:
+      - SERVICE_DIRECTORY
       - KBASE_ENDPOINT
       - ORCID_API_BASE_URL
       - ORCID_OAUTH_BASE_URL

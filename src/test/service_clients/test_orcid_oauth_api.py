@@ -11,6 +11,7 @@ from orcidlink.jsonrpc.errors import (
     ORCIDNotAuthorizedError,
     UpstreamError,
 )
+from orcidlink.lib.json_support import json_path
 from orcidlink.lib.service_clients import orcid_api
 from orcidlink.lib.service_clients.orcid_oauth_api import (
     ORCIDOAuthAPIClient,
@@ -171,7 +172,7 @@ async def test_orcid_oauth_revoke_access_token_success():
     The happy path
     """
     with no_stderr():
-        with mock_orcid_oauth_service(MOCK_ORCID_OAUTH_PORT) as [_, _, url, port]:
+        with mock_orcid_oauth_service(MOCK_ORCID_OAUTH_PORT) as [_, _, url, _]:
             client = ORCIDOAuthAPIClient(url)
             response = await client.revoke_access_token("access_token")
             assert response is None
@@ -192,7 +193,9 @@ async def test_orcid_oauth_revoke_access_token_not_authorized_error():
             with pytest.raises(ORCIDNotAuthorizedError) as err:
                 await client.revoke_access_token("error-unauthorized-client")
             assert err.value.CODE == ORCIDNotAuthorizedError.CODE
-            assert err.value.data["upstream_error"]["error"] == "unauthorized_client"
+            found, error = json_path(err.value.data, ["upstream_error", "error"])
+            assert found is True
+            assert error == "unauthorized_client"
 
 
 # This test doesn't make any sense -- the error is not thrown
@@ -204,7 +207,9 @@ async def test_orcid_oauth_revoke_access_token_other_upstream_error():
             with pytest.raises(UpstreamError) as err:
                 await client.revoke_access_token("error-invalid-scope")
             assert err.value.CODE == UpstreamError.CODE
-            assert err.value.data["upstream_error"]["error"] == "invalid_scope"
+            found, error = json_path(err.value.data, ["upstream_error", "error"])
+            assert found is True
+            assert error == "invalid_scope"
 
 
 @mock.patch.dict(os.environ, TEST_ENV, clear=True)
@@ -255,7 +260,9 @@ async def test_orcid_oauth_revoke_access_token_error_invalid_json():
             with pytest.raises(UpstreamError) as err:
                 await client.revoke_access_token("error-response-invalid-json")
             assert err.value.CODE == UpstreamError.CODE
-            assert err.value.data["upstream_error"]["foo"] == "bar"
+            found, error = json_path(err.value.data, ["upstream_error", "foo"])
+            assert found is True
+            assert error == "bar"
 
 
 # @mock.patch.dict(os.environ, TEST_ENV, clear=True)
@@ -383,7 +390,9 @@ async def test_orcid_oauth_refresh_token_error_other_error():
             with pytest.raises(UpstreamError) as err:
                 await client.refresh_token("refresh-token-other-error")
             assert err.value.CODE == UpstreamError.CODE
-            assert err.value.data["upstream_error"]["error"] == "invalid_request"
+            found, error = json_path(err.value.data, ["upstream_error", "error"])
+            assert found is True
+            assert error == "invalid_request"
 
 
 # @mock.patch.dict(os.environ, TEST_ENV, clear=True)
@@ -470,7 +479,9 @@ async def test_orcid_oauth_revoke_access_token_invalid_error():
                 await client.refresh_token("invalid-error")
 
             assert err.value.CODE == UpstreamError.CODE
-            assert err.value.data["upstream_error"]["foo"] == "bar"
+            found, error = json_path(err.value.data, ["upstream_error", "foo"])
+            assert found is True
+            assert error == "bar"
 
 
 # @mock.patch.dict(os.environ, TEST_ENV, clear=True)
@@ -587,10 +598,12 @@ async def test_exchange_code_for_token_error_incorrect_error_format():
         with mock_orcid_oauth_service(MOCK_ORCID_OAUTH_PORT) as [_, _, url, port]:
             code = "error-incorrect-error-format"
             client = ORCIDOAuthAPIClient(url=url)
-            with pytest.raises(UpstreamError) as uie:
+            with pytest.raises(UpstreamError) as err:
                 await client.exchange_code_for_token(code)
-            assert uie.value.CODE == UpstreamError.CODE
-            assert uie.value.data["upstream_error"]["foo"] == "bar"
+            assert err.value.CODE == UpstreamError.CODE
+            found, error = json_path(err.value.data, ["upstream_error", "foo"])
+            assert found is True
+            assert error == "bar"
 
 
 @mock.patch.dict(os.environ, TEST_ENV, clear=True)
@@ -604,7 +617,9 @@ async def test_exchange_code_for_token_error_correct_error_format():
         with mock_orcid_oauth_service(MOCK_ORCID_OAUTH_PORT) as [_, _, url, port]:
             code = "error-correct-error-format"
             client = ORCIDOAuthAPIClient(url=url)
-            with pytest.raises(UpstreamError) as uie:
+            with pytest.raises(UpstreamError) as err:
                 await client.exchange_code_for_token(code)
-            assert uie.value.CODE == UpstreamError.CODE
-            assert uie.value.data["upstream_error"]["error"] == "invalid_request"
+            assert err.value.CODE == UpstreamError.CODE
+            found, error = json_path(err.value.data, ["upstream_error", "error"])
+            assert found is True
+            assert error == "invalid_request"

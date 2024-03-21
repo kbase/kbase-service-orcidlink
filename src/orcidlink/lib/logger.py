@@ -7,9 +7,11 @@ from orcidlink.lib.utils import posix_time_millis
 
 
 class JSONLogger:
+    directory: str
     name: str
 
-    def __init__(self, name: str):
+    def __init__(self, directory: str, name: str):
+        self.directory = directory
         self.name = name
 
     def get_logger(self) -> logging.Logger:
@@ -17,7 +19,7 @@ class JSONLogger:
         if len(logger.handlers) == 0:
             # Here we may change the logging handler to something like HTTP, syslog, io stream,
             # see https://docs.python.org/3/library/logging.handlers.html
-            handler = logging.FileHandler(f"/tmp/{self.name}.log")
+            handler = logging.FileHandler(f"{self.directory}/{self.name}.log")
             formatter = logging.Formatter("%(message)s")
             handler.setFormatter(formatter)
             logger.addHandler(handler)
@@ -68,7 +70,7 @@ class JSONLogger:
                         "username": "n/a",
                         # Log entries resulting from a network call can/should identify
                         # the ip address of the caller
-                        "client_ip": "n/a"
+                        "client_ip": "n/a",
                         # could be more context, like the jupyter / ipython / etc. versions
                     },
                     # This is the specific data sent in this logging event
@@ -82,27 +84,12 @@ class JSONLogger:
         return log_id
 
 
-# def format_time_in_rfc3339(
-#     _self: logging.Formatter, record: logging.LogRecord, _: str | None = None
-# ) -> str:
-#     return datetime.datetime.fromtimestamp(
-#         record.created, datetime.timezone.utc
-#     ).isoformat()
-
-
-ORCID_LOGGER = None
-
-
-def global_logger() -> JSONLogger:
-    global ORCID_LOGGER
-    if ORCID_LOGGER is None:
-        ORCID_LOGGER = JSONLogger("orcidlink")
-    return ORCID_LOGGER
+ORCID_LOGGER = JSONLogger("/tmp", "orcidlink")
 
 
 def log_level(level: int) -> None:
-    global_logger().log_level(level)
+    ORCID_LOGGER.log_level(level)
 
 
 def log_event(event: str, data: Any, level: int = logging.INFO) -> str:
-    return global_logger().log_event(event, data, level)
+    return ORCID_LOGGER.log_event(event, data, level)

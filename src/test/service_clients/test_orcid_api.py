@@ -16,6 +16,7 @@ from orcidlink.jsonrpc.errors import (
     ORCIDNotFoundError,
     UpstreamError,
 )
+from orcidlink.lib.json_support import JSONObject
 from orcidlink.lib.service_clients import orcid_api
 from orcidlink.lib.service_clients.orcid_api_errors import (
     OAuthBearerError,
@@ -493,7 +494,7 @@ def test_extract_error():
     # This is the response for api endpoints if there is a problem with
     # authorization.
     #
-    valid_api_error_object = {
+    valid_api_error_object: JSONObject = {
         "error": "invalid_request",
         "error_description": "this is a foo error",
     }
@@ -516,7 +517,7 @@ def test_extract_error():
     #
     # An unspecified error response is returned as plain JSON
     #
-    unrecognized_error_object = {
+    unrecognized_error_object: JSONObject = {
         "something": "else",
     }
     other_orcid_api_error = orcid_api.extract_error(unrecognized_error_object)

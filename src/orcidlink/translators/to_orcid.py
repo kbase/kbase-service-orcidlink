@@ -97,7 +97,7 @@ def transform_contributor(
 def transform_contributors(
     contributors_update: List[model.ORCIDContributor],
 ) -> List[orcid_api.Contributor]:
-    all_contributors = []
+    all_contributors: List[orcid_api.Contributor] = []
     for contributor in contributors_update:
         contributors = transform_contributor(contributor)
         all_contributors.extend(contributors)
@@ -107,7 +107,7 @@ def transform_contributors(
 def transform_contributors_self(
     contributors_update: List[model.ORCIDContributorSelf],
 ) -> List[orcid_api.Contributor]:
-    all_contributors = []
+    all_contributors: List[orcid_api.Contributor] = []
     for contributor in contributors_update:
         contributors = transform_contributor_self(contributor)
         all_contributors.extend(contributors)
@@ -128,7 +128,7 @@ def translate_work_update(work_update: model.WorkUpdate) -> orcid_api.WorkUpdate
             external_id_relationship="self",
         )
     ]
-    for index, externalId in enumerate(work_update.externalIds):
+    for _, externalId in enumerate(work_update.externalIds):
         external_ids.append(
             orcid_api.ExternalId(
                 external_id_type=externalId.type,
@@ -145,7 +145,7 @@ def translate_work_update(work_update: model.WorkUpdate) -> orcid_api.WorkUpdate
     )
     # work_record.short_description = work_update.shortDescription
 
-    contributors = []
+    contributors: List[orcid_api.Contributor] = []
 
     self_contributors = transform_contributor_self(work_update.selfContributor)
     contributors.extend(self_contributors)

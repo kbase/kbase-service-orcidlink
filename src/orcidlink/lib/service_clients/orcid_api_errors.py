@@ -13,8 +13,8 @@ from orcidlink.jsonrpc.errors import (
 )
 from orcidlink.lib.json_support import JSONObject
 from orcidlink.lib.service_clients.orcid_api_error_codes import (
-    ORCID_API_ERROR_MAP,
     ORCIDAPIErrorCategory,
+    get_orcid_api_error,
 )
 from orcidlink.lib.type import ServiceBaseModel
 
@@ -107,7 +107,7 @@ class ORCIDAPIErrorDetail(ServiceBaseModel):
 
 
 def orcid_api_error_to_json_rpc_error(api_error: ORCIDAPIError) -> JSONRPCError:
-    error_code = ORCID_API_ERROR_MAP.get(api_error.error_code)
+    error_code = get_orcid_api_error(api_error.error_code)
     error_detail = ORCIDAPIErrorDetail(upstream_error=api_error).model_dump
     if error_code is None:
         return UpstreamError(data=error_detail)

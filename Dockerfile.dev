@@ -1,4 +1,4 @@
-FROM python:3.11.5-slim-bookworm
+FROM python:3.12.2-slim-bookworm
 # Note that the python version needs to match that used to create
 # poetry.lock.
 
@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y curl git openssh-client
 SHELL ["/bin/bash", "-c"]
 
 # Install poetry
-RUN curl -sSL https://install.python-poetry.org | python3 - --version 1.6.1
+RUN curl -sSL https://install.python-poetry.org | python3 - --version 1.8.2
 
 # Temporary fix for broken Python venv.
 # setuptools is not used by poetry (see the install command below), but it is present

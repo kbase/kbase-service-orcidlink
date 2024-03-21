@@ -22,6 +22,7 @@ async def get_works(username: str) -> List[ORCIDWorkGroup]:
     orcid_id = link_record.orcid_auth.orcid
 
     orcid_works = await orcid_api.orcid_api(token).get_works(orcid_id)
+
     result: List[ORCIDWorkGroup] = []
     for group in orcid_works.group:
         result.append(
@@ -64,12 +65,6 @@ async def get_work(username: str, put_code: int) -> GetWorkResult:
     raw_work = await orcid_api.orcid_api(token).get_work(orcid_id, put_code)
     profile = await orcid_api.orcid_api(token).get_profile(orcid_id)
     return GetWorkResult(work=to_service.transform_work(profile, raw_work.bulk[0].work))
-    # except orcid_api.ORCIDAPINotFoundError as err:
-    #     raise NotFoundError(err.message)
-    # except orcid_api.ORCIDAPIClientInvalidAccessTokenError as err:
-    #     raise ORCIDInsufficientAuthorizationError(err.message)
-    # except orcid_api.ORCIDAPIClientOtherError as err:
-    #     raise UpstreamError(err.message)
 
 
 class CreateWorkResult(ServiceBaseModel):
@@ -100,26 +95,23 @@ async def create_work(username: str, new_work: NewWork) -> CreateWorkResult:
     ]
 
     # external_ids: List[orcid_api.ORCIDExternalId] = []
-    if new_work.externalIds is not None:
-        for index, externalId in enumerate(new_work.externalIds):
-            external_ids.append(
-                orcid_api.ExternalId(
-                    external_id_type=externalId.type,
-                    external_id_value=externalId.value,
-                    external_id_url=ORCIDStringValue(value=externalId.url),
-                    external_id_relationship=externalId.relationship,
-                )
+    # if new_work.externalIds is not None:
+    for _, externalId in enumerate(new_work.externalIds):
+        external_ids.append(
+            orcid_api.ExternalId(
+                external_id_type=externalId.type,
+                external_id_value=externalId.value,
+                external_id_url=ORCIDStringValue(value=externalId.url),
+                external_id_relationship=externalId.relationship,
             )
-        # NOTE: yes, it is odd that "external-ids" takes a single property
-        # "external-id" which itself is the collection of external ids!
-        # work_record["external-ids"] = {"external-id": external_ids}
+        )
 
     citation = orcid_api.Citation(
         citation_type=new_work.citation.type,
         citation_value=new_work.citation.value,
     )
 
-    contributors = []
+    contributors: List[orcid_api.Contributor] = []
 
     self_contributors = to_orcid.transform_contributor_self(new_work.selfContributor)
     contributors.extend(self_contributors)
@@ -210,7 +202,7 @@ async def save_work(username: str, work_update: WorkUpdate) -> SaveWorkResult:
     return SaveWorkResult(work=to_service.transform_work(profile, raw_work_record))
 
 
-async def delete_work(username, put_code: int) -> None:
+async def delete_work(username: str, put_code: int) -> None:
     link_record = await process.link_record_for_user(username)
     if link_record is None:
         raise NotFoundError("ORCID Profile Not Found")

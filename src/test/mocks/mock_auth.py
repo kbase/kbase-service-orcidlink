@@ -101,10 +101,6 @@ class MockAuthService(MockAuthServiceBase):
                 #     self.send_json("Bad JSON!")
                 elif authorization.startswith("text_json"):
                     self.send_json_text("Bad JSON!", content_type="application/json")
-                # elif authorization.startswith("something_bad"):
-                #     # just do something bad:
-                #     x = 1 / 0
-                #     print(x)
                 elif authorization == "internal_server_error":
                     self.send_text_error("Internal Server Error", 500)
                 else:

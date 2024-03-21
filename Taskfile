@@ -9,12 +9,13 @@
 #
 # Runs docker compose with the given docker compose filename suffix with the given command arguments
 #
-function _run-in {
+function _dc-run {
   docker compose -f "tools/docker-compose-${1}.yml" --project-directory "${PWD}" --project-name orcidlink run --remove-orphans --rm orcidlink "${@:2}"
 }
 
 function _dc-up {
   docker compose -f "tools/docker-compose-${1}.yml" --project-directory "${PWD}" --project-name orcidlink up
+  docker compose -f "tools/docker-compose-${1}.yml" --project-directory "${PWD}" --project-name orcidlink rm -f
 }
 
 
@@ -132,24 +133,47 @@ function dev-server {
   _dc-up dev
 }
 
-function server {
-  export KBASE_ENDPOINT=https://ci.kbase.us/services/
+function orcid-sandbox-env {
   export ORCID_OAUTH_BASE_URL=https://sandbox.orcid.org/oauth
   export ORCID_API_BASE_URL=https://api.sandbox.orcid.org/v3.0
   export ORCID_SITE_BASE_URL=https://orcid.org
-  export ORCID_CLIENT_ID=${ORCID_CLIENT_ID:?Required environment variable 'ORCID_CLIENT_ID' not provided}
-  export ORCID_CLIENT_SECRET=${ORCID_CLIENT_SECRET?Required environment variable 'ORCID_CLIENT_SECRET' not provided}
+  export ORCID_CLIENT_ID=${1:?Required environment variable 'ORCID_CLIENT_ID' not provided}
+  export ORCID_CLIENT_SECRET=${2?Required environment variable 'ORCID_CLIENT_SECRET' not provided}
+}
+
+function server {
+  export SERVICE_DIRECTORY="/kb/module"
+  export KBASE_ENDPOINT=${KBASE_ENDPOINT:?Required environment variable 'KBASE_ENDPOINT' not provided}
   export MONGO_HOST=mongo
   export MONGO_PORT=27017
   export MONGO_DATABASE=orcidlink
   export MONGO_USERNAME=dev
   export MONGO_PASSWORD=d3v
+  echo
+  echo "ENV???"
+  env
+  echo
+  echo "required environment variables check"
+  echo "SERVICE_DIRECTORY=${SERVICE_DIRECTORY}"
+  echo "ORCID_API_BASE_URL=${ORCID_API_BASE_URL}"
+  echo "ORCID_OAUTH_BASE_URL=${ORCID_OAUTH_BASE_URL}"
+  echo "ORCID_SITE_BASE_URL=${ORCID_SITE_BASE_URL}"
+  echo "ORCID_CLIENT_ID=${ORCID_CLIENT_ID}"
+  echo "ORCID_CLIENT_SECRET=${ORCID_CLIENT_SECRET}"
+  echo "MONGO_HOST=${MONGO_HOST}"
+  echo "MONGO_PORT=${MONGO_PORT}"
+  echo "MONGO_DATABASE=${MONGO_DATABASE}"
+  echo "MONGO_USERNAME=${MONGO_USERNAME}"
+  echo "MONGO_PASSWORD=${MONGO_PASSWORD}"
+
   _dc-up prod-like
 }
 
+export DEFAULT_LOCAL_IMAGE="kbase/orcidlink:dev"
+
 # For building a prod-like image locally
 function build-image {
-  docker build -t kbase/orcidlink:dev .
+  docker build -t "${DEFAULT_LOCAL_IMAGE}" .
 }
 
 #
@@ -167,9 +191,14 @@ function build-image {
 #}
 
 # For running a prod-like image locally
-function image {
+function run-image {
   # NB There should be a mongo db running at the indicated
   # host and port with the indicated auth
+  IMAGE_NAME="${1:-$DEFAULT_LOCAL_IMAGE}"
+  echo
+  echo "Running orcidlink image"
+  echo "Image name: ${IMAGE_NAME}"
+  echo
   docker run \
     -e KBASE_ENDPOINT=https://ci.kbase.us/services/ \
     -e ORCID_OAUTH_BASE_URL=https://sandbox.orcid.org/oauth \
@@ -181,14 +210,13 @@ function image {
     -e MONGO_DATABASE=orcidlink \
     -e MONGO_USERNAME=dev \
     -e MONGO_PASSWORD=d3v \
-    --pull always \
     --stop-signal SIGINT \
     --dns 8.8.8.8 \
     --network kbase-dev \
     --name orcidlink \
     --hostname orcidlink \
     --rm \
-    "${1:-kbase/orcidlink:dev}"
+    "${IMAGE_NAME}"
 }
 
 function help {

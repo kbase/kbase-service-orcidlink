@@ -2,6 +2,7 @@
 # A dockerfile for running the server under development.
 #
 version: '3.6'
+name: kbase-dev
 networks:
   kbase-dev:
     name: kbase-dev

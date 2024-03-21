@@ -90,7 +90,7 @@ class StorageModelMongo:
             limit=limit or 0,
         )
 
-        links = []
+        links: List[LinkRecord] = []
 
         for doc in await cursor.to_list(length=100):
             link = LinkRecord.model_validate(doc)
@@ -281,7 +281,7 @@ class StorageModelMongo:
     async def get_linking_sessions_completed(self) -> List[LinkingSessionComplete]:
         cursor = self.db.linking_sessions_completed.find({})
 
-        linking_sessions = []
+        linking_sessions: List[LinkingSessionComplete] = []
 
         for doc in await cursor.to_list(length=100):
             link = LinkingSessionComplete.model_validate(doc)
@@ -292,7 +292,7 @@ class StorageModelMongo:
     async def get_linking_sessions_started(self) -> List[LinkingSessionStarted]:
         cursor = self.db.linking_sessions_started.find({})
 
-        linking_sessions = []
+        linking_sessions: List[LinkingSessionStarted] = []
 
         for doc in await cursor.to_list(length=100):
             link = LinkingSessionStarted.model_validate(doc)
@@ -303,7 +303,7 @@ class StorageModelMongo:
     async def get_linking_sessions_initial(self) -> List[LinkingSessionInitial]:
         cursor = self.db.linking_sessions_initial.find({})
 
-        linking_sessions = []
+        linking_sessions: List[LinkingSessionInitial] = []
 
         for doc in await cursor.to_list(length=100):
             link = LinkingSessionInitial.model_validate(doc)

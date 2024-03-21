@@ -4,6 +4,7 @@ A basic KBase auth client for the Python server.
 The SDK version has been modified to integrate with this codebase, such as
 using httpx, pydantic models.
 """
+
 import json
 from typing import Any, Dict, List, Optional
 

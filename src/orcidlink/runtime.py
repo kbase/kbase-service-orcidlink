@@ -7,8 +7,6 @@ import os
 from orcidlink.lib.config import RuntimeConfig, ServiceConfig
 from orcidlink.lib.utils import posix_time_millis
 
-CONFIG: RuntimeConfig | None = None
-
 
 class RuntimeStats:
     start_time: int
@@ -17,21 +15,24 @@ class RuntimeStats:
         self.start_time = posix_time_millis()
 
 
-STATS: RuntimeStats | None = None
+_config = None
 
 
 def config() -> RuntimeConfig:
-    global CONFIG
-    if CONFIG is None:
-        CONFIG = ServiceConfig().runtime_config
-    return CONFIG
+    global _config
+    if _config is None:
+        _config = ServiceConfig().runtime_config
+    return _config
+
+
+_stats = None
 
 
 def stats() -> RuntimeStats:
-    global STATS
-    if STATS is None:
-        STATS = RuntimeStats()
-    return STATS
+    global _stats
+    if _stats is None:
+        _stats = RuntimeStats()
+    return _stats
 
 
 def service_path(path: str) -> str:

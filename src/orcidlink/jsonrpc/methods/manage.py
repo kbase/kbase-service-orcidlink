@@ -72,7 +72,7 @@ class QueryFind(ServiceBaseModel):
     created: Optional[FilterByCreationTime] = Field(default=None)
     expires: Optional[FilterByExpirationTime] = Field(default=None)
 
-    class Config:
+    class Config:  # type: ignore
         extra = "forbid"
 
 
@@ -91,7 +91,7 @@ class SearchQuery(ServiceBaseModel):
     offset: Optional[int] = Field(default=None)
     limit: Optional[int] = Field(default=None)
 
-    class Config:
+    class Config:  # type: ignore
         extra = "forbid"
 
 
@@ -122,7 +122,7 @@ def augment_with_time_filter(
 
 async def find_links(query: Optional[SearchQuery] = None) -> FindLinksResult:
     filter: dict[str, dict[str, str | int]] = {}
-    sort = []
+    sort: list[tuple[str, int]] = []
     offset = 0
     limit = None
 
@@ -133,20 +133,21 @@ async def find_links(query: Optional[SearchQuery] = None) -> FindLinksResult:
                     filter["username"] = {"$eq": query.find.username.eq}
 
             if query.find.orcid is not None:
-                if query.find.orcid.eq is not None:
-                    filter["orcid_auth.orcid"] = {"$eq": query.find.orcid.eq}
+                filter["orcid_auth.orcid"] = {"$eq": query.find.orcid.eq}
 
             augment_with_time_filter(filter, "created_at", query.find.created)
             augment_with_time_filter(filter, "expires_at", query.find.expires)
 
         if query.sort is not None:
             for sort_spec in query.sort.specs:
-                sort.append(
+                sort.append(  # type: ignore
                     (
                         sort_spec.field_name,
-                        pymongo.DESCENDING
-                        if sort_spec.descending is True
-                        else pymongo.ASCENDING,
+                        (
+                            pymongo.DESCENDING
+                            if sort_spec.descending is True
+                            else pymongo.ASCENDING
+                        ),
                     )
                 )
 

@@ -107,8 +107,6 @@ def orcid_oauth_api_to_json_rpc_error(error: OAuthAPIError) -> JSONRPCError:
         raise ORCIDNotAuthorizedError(data=error_detail)
     elif error.error == OAUthAPIErrorType.unsuppported_grant_type:
         raise UpstreamError(data=error_detail)
-    elif error.error == OAUthAPIErrorType.invalid_grant:
-        raise UpstreamError(data=error_detail)
     else:
         # This last case is not possible, but pyright cannot determine
         # that we have exausted all the possible cases here, so we need

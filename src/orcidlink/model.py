@@ -11,6 +11,7 @@ JSON support, auto-documentation, the opportunity for more detailed schemas and
 documentation.
 
 """
+
 from enum import Enum
 from typing import Generic, List, Optional, TypeVar, Union
 
@@ -462,7 +463,7 @@ class ORCIDContributor(ServiceBaseModel):
     )
 
 
-class ORCIDContributorSelf(ORCIDContributor):
+class ORCIDContributorSelf(ServiceBaseModel):
     orcidId: str = Field(
         title="ORCID Id",
         description=(
@@ -481,6 +482,38 @@ class ORCIDContributorSelf(ORCIDContributor):
         # kbSourceType="work:contributor -> sequence of -> common:contributor-orcid -> common:orcid-id",
         # kbSourceTypeRef="https://github.com/ORCID/orcid-model/blob/e7a9c0c0060f843b2534e6100b30cab713c8aef5/src/main/resources/common_3.0/common-3.0.xsd#L421",
         # kbUpstreamType="",
+        # kbUpstreamTypeRef="",
+    )
+    name: str = Field(
+        title="Name",
+        description="The name to use for the researcher or contributor when credited or cited",
+        max_length=150,
+        # custom
+        # kbComment="",
+        # kbNotes=["a string of maximum length 150."],
+        # kbSourceName="credit-name",
+        # kbSourceType="work:contributor -> sequence of -> credit-name -> common:credit-name -> common:string-150",
+        # kbSourceTypeRef="https://github.com/ORCID/orcid-model/blob/e7a9c0c0060f843b2534e6100b30cab713c8aef5/src/main/resources/common_3.0/common-3.0.xsd#L811",
+        # kbUpstreamType="xs:string",
+        # kbUpstreamTypeRef="",
+    )
+    # omitting email, as it seems never used
+    roles: List[ContributorRole] = Field(
+        title="Roles",
+        description="",
+        # custom
+        # kbComment="",
+        # kbNotes=[
+        #     "Interestingly this is called contributor-attributes in the orcid xsd",
+        #     "The role itself is stored as a structure with a sequence (index) and the role itself.",
+        #     "Note that this the available values consist of old and new ones.",
+        #     "The new ones are all from credit.niso.org.",
+        #     "Both are supported in their UI, but we should only support the new ones.",
+        # ],
+        # kbSourceName="contributor-role",
+        # kbSourceType="work:contributor -> sequence of -> contributor-attributes -> work:contributor-attributes -> sequence of -> contributor-role -> common:contributor-role",
+        # kbSourceTypeRef="https://github.com/ORCID/orcid-model/blob/e7a9c0c0060f843b2534e6100b30cab713c8aef5/src/main/resources/record_3.0/work-3.0.xsd#L191",
+        # kbUpstreamType="xs:string",
         # kbUpstreamTypeRef="",
     )
 

@@ -6,6 +6,7 @@ This module implements an OAUTH flow and related services required to create an
 ORCID Link and to fit into various front end usage scenarios.
 
 """
+
 import json
 import logging
 from typing import Any
@@ -149,8 +150,8 @@ async def start_linking_session(
     return_link: str | None = RETURN_LINK_QUERY,
     skip_prompt: bool = SKIP_PROMPT_QUERY,
     ui_options: str = UI_OPTIONS_QUERY,
-    kbase_session: str = KBASE_SESSION_COOKIE,
-    kbase_session_backup: str = KBASE_SESSION_BACKUP_COOKIE,
+    kbase_session: str | None = KBASE_SESSION_COOKIE,
+    kbase_session_backup: str | None = KBASE_SESSION_BACKUP_COOKIE,
 ) -> RedirectResponse:
     # TODO: should be no json responses here!
     """
@@ -175,9 +176,9 @@ async def start_linking_session(
                 "skip_prompt": skip_prompt,
                 "ui_options": ui_options,
                 "kbase_session": "REDACTED" if kbase_session is not None else "n/a",
-                "kbase_session_backup": "REDACTED"
-                if kbase_session_backup is not None
-                else "n/a",
+                "kbase_session_backup": (
+                    "REDACTED" if kbase_session_backup is not None else "n/a"
+                ),
             }
         },
     )
@@ -229,7 +230,9 @@ async def start_linking_session(
     url = f"{config().orcid_oauth_base_url}/authorize?{urlencode(params.model_dump())}"
 
     log_info(
-        "Successfully started linking session", "success", {"redirection_url": url}
+        "Successfully started linking session",
+        "success",
+        {"redirection_url": url, "orcidlink_url": config().orcidlink_url},
     )
 
     return responses.RedirectResponse(url, status_code=302)
@@ -267,20 +270,17 @@ async def start_linking_session(
     tags=["linking-sessions"],
 )
 async def linking_sessions_continue(
-    kbase_session: str = KBASE_SESSION_COOKIE,
-    kbase_session_backup: str = KBASE_SESSION_BACKUP_COOKIE,
-    code: str
-    | None = Query(
+    kbase_session: str | None = KBASE_SESSION_COOKIE,
+    kbase_session_backup: str | None = KBASE_SESSION_BACKUP_COOKIE,
+    code: str | None = Query(
         default=None,
         description="For a success case, contains an OAuth exchange code parameter",
     ),
-    state: str
-    | None = Query(
+    state: str | None = Query(
         default=None,
         description="For a success case, contains an OAuth state parameter",
     ),
-    error: str
-    | None = Query(
+    error: str | None = Query(
         default=None, description="For an error case, contains an error code parameter"
     ),
 ) -> RedirectResponse:
@@ -307,9 +307,9 @@ async def linking_sessions_continue(
                 "state": state,
                 "error": error,
                 "kbase_session": "REDACTED" if kbase_session is not None else "n/a",
-                "kbase_session_backup": "REDACTED"
-                if kbase_session_backup is not None
-                else "n/a",
+                "kbase_session_backup": (
+                    "REDACTED" if kbase_session_backup is not None else "n/a"
+                ),
             }
         },
     )
@@ -430,7 +430,7 @@ async def linking_sessions_continue(
     # Redirect back to the orcidlink interface, with some
     # options that support integration into workflows.
     #
-    params = {}
+    params: dict[str, str] = {}
 
     if session_record.return_link is not None:
         params["return_link"] = session_record.return_link

@@ -414,6 +414,10 @@ def migrate_db():
 
         service_description = get_service_description()
 
+        print("database migration")
+        print(description)
+        print(service_description)
+
         if service_description.version == "0.2.1":
             if description is None:
                 return initialize_v021(db)
@@ -509,7 +513,9 @@ def main():
     result = migrate_db()
     log_event("initialization-migrate-database", result)
     if result["status"] == "error":
-        raise Exception("mongodb database migration failed - see logs")
+        raise Exception(
+            f"mongodb database migration failed - see logs: {result['code']}, {result['message']}"
+        )
 
 
 main()

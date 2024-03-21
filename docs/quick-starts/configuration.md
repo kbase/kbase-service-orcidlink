@@ -22,7 +22,7 @@ The [Deployment doc](../operation/deployment.md) has all the details.
 
 ## Development
 
-During development, the required environment variables need to be mocked. The [development one-pager](./development.md) provides more details (but not a lot)
+During development, the required environment variables need to be mocked. The [development quick-start](./development.md) provides more details (but not a lot)
 
 ## Testing
 

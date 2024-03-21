@@ -186,7 +186,7 @@ class ORCIDOAuthAPIClient:
         token.
 
         The ORCID Link record should also be removed. The existing refresh token may not
-        be used to create a new token as it will be invalidated as well. The only
+        be used to create a new token as it will be invalidated as well.
 
         For access token revocation whilst retaining the ability to generate new access
         tokens via refreshing, see the refresh endpoint below.
@@ -282,9 +282,9 @@ class ORCIDOAuthAPIClient:
         # for redirection in this case.
         # TODO: investigate and point to the docs, because this is weird.
         # TODO: put in orcid client!
-        data[
-            "redirect_uri"
-        ] = f"{config().orcidlink_url}/linking-sessions/oauth/continue"
+        data["redirect_uri"] = (
+            f"{config().orcidlink_url}/linking-sessions/oauth/continue"
+        )
 
         url = f"{config().orcid_oauth_base_url}/token"
 

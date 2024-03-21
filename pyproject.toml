@@ -1,45 +1,47 @@
 [tool.poetry]
 name = "orcid-link"
-version = "0.4.0"
+version = "0.4.1"
 description = ""
 authors = ["Erik Pearson <eapearson@lbl.gov>"]
+package-mode = false
 
 [tool.poetry.dependencies]
-aiohttp = "3.8.6"
-asgi-correlation-id = "4.2.0"
-python = "3.11.5"
-cachetools = "5.3.1"
+aiohttp = "3.9.3"
+asgi-correlation-id = "4.3.1"
+python = "3.12.2"
+cachetools = "5.3.3"
 dicttoxml2 = "2.1.0"
-email-validator = "2.0.0.post2"
-fastapi = "0.103.2"
-fastapi-jsonrpc = "3.0.0b2"
-httpx = "0.25.0"
-jinja2-tools = "1.0.7"
-motor = "3.3.1"
-pymongo = "4.5.0"
+email-validator = "2.1.1"
+fastapi = "0.110.0"
+fastapi-jsonrpc = "3.1.1"
+httpx = "0.27.0"
+jinja2-tools = "1.0.8"
+motor = "3.3.2"
+pymongo = "4.6.2"
 python-json-logger = "2.0.7"
 PyYAML = "6.0.1"
 tomli-w = "1.0.0"
-uvicorn = "0.23.2"
-uvloop = "0.18.0"
+uvicorn = "0.29.0"
+uvloop = "0.19.0"
 xmltodict = "0.13.0"
 
 [tool.poetry.group.dev.dependencies]
-autoflake = "2.2.1"
-black = "23.10.0"
-fastapi = { version = "0.103.2", extras = ["all"] }
-isort = "5.12.0"
+autoflake = "2.3.1"
+black = "24.3.0"
+fastapi = { version = "0.110.0", extras = ["all"] }
+isort = "5.13.2"
 mongomock = "4.1.2"
-motor-types = "1.0.0b3"
-pipdeptree = "2.13.0"
-pyfakefs = "5.3.0"
-pyright = "1.1.331"
-pytest = "7.4.2"
-pytest-asyncio = "0.21.1"
+motor-types = "1.0.0b4"
+pipdeptree = "2.16.1"
+pyfakefs = "5.3.5"
+pyright = "1.1.355"
+pytest = "8.1.1"
+# pytest = "7.4.3"
+pytest-asyncio = "0.23.6"
 pytest-cov = "4.1.0"
-types-cachetools = "5.3.0.6"
-types-python-dateutil = "2.8.19.14"
-types-PyYAML = "6.0.12.12"
+types-cachetools = "5.3.0.7"
+types-python-dateutil = "2.9.0.20240316"
+types-PyYAML = "6.0.12.20240311"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -59,3 +61,6 @@ profile = "black"
 
 [tool.pyright]
 include = ["src"]
+reportMissingImports = true
+# reportMissingTypeStubs = false
+strict = ["src/orcidlink"]

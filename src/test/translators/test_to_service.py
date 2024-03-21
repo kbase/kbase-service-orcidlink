@@ -288,9 +288,9 @@ def test_transform_orcid_profile_no_credit_name():
 def test_transform_orcid_profile_affiliation_group_not_list():
     raw_test_profile = load_test_data(TEST_DATA_DIR, "orcid", "profile")
     # coerce the affiliation group to a single instance, rather than list.
-    raw_test_profile["activities-summary"]["employments"][
-        "affiliation-group"
-    ] = raw_test_profile["activities-summary"]["employments"]["affiliation-group"][0]
+    raw_test_profile["activities-summary"]["employments"]["affiliation-group"] = (
+        raw_test_profile["activities-summary"]["employments"]["affiliation-group"][0]
+    )
     orcid_profile = orcid_api.ORCIDProfile.model_validate(raw_test_profile)
     model_profile = to_service.orcid_profile(orcid_profile)
     assert isinstance(model_profile.employment, list)

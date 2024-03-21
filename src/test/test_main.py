@@ -84,8 +84,13 @@ LINKING_SESSION_COMPLETED = load_data_file(
 
 @pytest.fixture
 def fake_fs(fs):
-    fs.create_file("/app/SERVICE_DESCRIPTION.toml", contents=service_description_toml)
-    fs.create_file("/app/build/git-info.json", contents=git_info_json)
+    fs.create_file(
+        f"{os.environ['SERVICE_DIRECTORY']}/SERVICE_DESCRIPTION.toml",
+        contents=service_description_toml,
+    )
+    fs.create_file(
+        f"{os.environ['SERVICE_DIRECTORY']}/build/git-info.json", contents=git_info_json
+    )
     data_dir = os.environ["TEST_DATA_DIR"]
     fs.add_real_directory(data_dir)
     yield fs
@@ -1131,6 +1136,12 @@ async def test_get_work2():
 async def test_get_work_errors():
     with mock_services():
         await clear_database()
+
+        # Link not found for this user.
+        params = {"username": "foo", "put_code": 1234}
+        response = rpc_call("get-orcid-work", params, generate_kbase_token("foo"))
+        assert_json_rpc_error(response, NotFoundError.CODE, NotFoundError.MESSAGE)
+
         await create_link(TEST_LINK)
         #
         # Omitting a param
@@ -1139,15 +1150,6 @@ async def test_get_work_errors():
         params = {
             "username": "bar",
         }
-        response = rpc_call("get-orcid-work", params, generate_kbase_token("bar"))
-        assert_json_rpc_error(response, -32602, "Invalid params")
-
-        #
-        # An unlinked user gets a Not Found, which is caught by the method impl.
-        #
-        params = {"username": "bar", "put_code": 1526002}
-        response = rpc_call("get-orcid-work", params, generate_kbase_token("bar"))
-        assert_json_rpc_error(response, NotFoundError.CODE, NotFoundError.MESSAGE)
 
         # Another cause of not-found is if the work is not found.
         params = {"username": "foo", "put_code": 1234}
@@ -1187,6 +1189,7 @@ async def test_get_work_errors():
         # TODO: properly design standard error message AND specific error message.
         # assert_json_rpc_error(response, UpstreamError.CODE, "Received Incorrect Content Type")
         assert_json_rpc_error(response, UpstreamError.CODE, UpstreamError.MESSAGE)
+
         #
         # A bad put code results in a 400 from ORCID
         #

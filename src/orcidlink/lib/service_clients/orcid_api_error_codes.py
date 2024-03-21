@@ -476,21 +476,11 @@ ORCID_API_ERROR_CODES: List[ORCIDAPIErrorCode] = [
     ),
 ]
 
-ORCID_API_ERROR_MAP: Dict[int, ORCIDAPIErrorCode] = {}
+_ORCID_API_ERROR_MAP: Dict[int, ORCIDAPIErrorCode] = {}
 
 for error_code in ORCID_API_ERROR_CODES:
-    ORCID_API_ERROR_MAP[error_code.code] = error_code
+    _ORCID_API_ERROR_MAP[error_code.code] = error_code
 
 
 def get_orcid_api_error(code: int) -> ORCIDAPIErrorCode | None:
-    return ORCID_API_ERROR_MAP.get(code)
-
-
-# class ORCIDAPIErrorCategory(str, Enum):
-#     connection = "connection"
-#     bad_request = "bad_request"
-#     internal_error = "internal_error"
-#     not_authorized = "not_authorized"
-#     insufficient_authorization = "insufficient_authorization"
-#     not_found = "not_found"
-#     other_error = "other_error"
+    return _ORCID_API_ERROR_MAP.get(code)

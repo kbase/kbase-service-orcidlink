@@ -1,0 +1,13 @@
+{
+    "bulk": [
+        {
+            "error": {
+                "response-code": 400,
+                "developer-message": "400 Bad Request: The put code provided is not valid. Full validation error: '1487805' is not a valid put code",
+                "user-message": "There was an error when updating the record. Please try again. If the error persists, please contact KBase CI for assistance.",
+                "error-code": 9034,
+                "more-info": "https://members.orcid.org/api/resources/troubleshooting"
+            }
+        }
+    ]
+}

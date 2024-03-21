@@ -19,7 +19,7 @@ def main():
                 tags=app.openapi_tags,
                 terms_of_service=app.terms_of_service,
                 contact=app.contact,
-                license_info=app.license_info
+                license_info=app.license_info,
                 # openapi_prefix=app.openapi_prefix,
             ),
             out,
