@@ -31,7 +31,7 @@ services:
       # - mongo-express
   mongo:
     # image: mongo:3.6.13
-    image: mongo:6.0.7
+    image: mongo:7.0.9
     restart: always
     networks:
       - kbase-dev

@@ -13,4 +13,4 @@ def test_orcid_api_error_to_json_rpc_error():
         more_info="baz",
     )
 
-    json_rpc_error = orcid_api_error_to_json_rpc_error(api_error)
+    orcid_api_error_to_json_rpc_error(api_error)

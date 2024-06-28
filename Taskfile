@@ -121,6 +121,7 @@ function dev-server {
   export ORCID_SITE_BASE_URL=https://sandbox.orcid.org
   export ORCID_CLIENT_ID=${ORCID_CLIENT_ID:?Required environment variable 'ORCID_CLIENT_ID' not provided}
   export ORCID_CLIENT_SECRET=${ORCID_CLIENT_SECRET?Required environment variable 'ORCID_CLIENT_SECRET' not provided}
+  export LINKING_SESSION_RETURN_URL=https://ci.kbase.us/orcidlink/linkcontinue
   export MONGO_HOST=mongo
   export MONGO_PORT=27017
   export MONGO_DATABASE=orcidlink

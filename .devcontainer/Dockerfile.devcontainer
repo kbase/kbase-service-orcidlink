@@ -1,4 +1,4 @@
-FROM python:3.12.2-slim-bookworm
+FROM python:3.12.4-slim-bookworm
 # Note that the python version needs to match that used to create
 # poetry.lock.
 
@@ -45,4 +45,4 @@ RUN mkdir -p /kb/module/work && mkdir /kb/module/deploy && mkdir -p /kb/module/b
 
 WORKDIR /kb/module
 
-RUN poetry config virtualenvs.create false && poetry config virtualenvs.options.no-setuptools true 
+RUN poetry config virtualenvs.create false && poetry config virtualenvs.options.no-setuptools true

@@ -46,6 +46,7 @@ TEST_ENV = {
     "ORCID_SITE_BASE_URL": "https://sandbox.orcid.org",
     "ORCID_CLIENT_ID": "CLIENT-ID",
     "ORCID_CLIENT_SECRET": "CLIENT-SECRET",
+    "LINKING_SESSION_RETURN_URL": "https://ci.kbase.us/orcidlink/linkcontinue",
     "MONGO_HOST": "MONGO-HOST",
     "MONGO_PORT": "1234",
     "MONGO_DATABASE": "MONGO-DATABASE",

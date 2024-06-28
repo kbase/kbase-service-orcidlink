@@ -141,14 +141,15 @@ class StrEnvironmentVariables(ServiceBaseModel):
     mongo_password: StrEnvironmentVariable = Field(...)
     orcid_scopes: StrEnvironmentVariable = Field(...)
     log_level: StrEnvironmentVariable = Field(...)
+    linking_session_return_url: StrEnvironmentVariable = Field(...)
 
 
 STR_ENVIRONMENT_VARIABLE_DEFAULTS = StrEnvironmentVariables(
     service_directory=StrEnvironmentVariable(
-        required=True, 
-        env_name="SERVICE_DIRECTORY", 
+        required=True,
+        env_name="SERVICE_DIRECTORY",
         value="/kb/module",
-        description=("The directory in which the service is installed")
+        description=("The directory in which the service is installed"),
     ),
     kbase_endpoint=StrEnvironmentVariable(
         required=True, env_name="KBASE_ENDPOINT", description=("")
@@ -195,6 +196,9 @@ STR_ENVIRONMENT_VARIABLE_DEFAULTS = StrEnvironmentVariables(
     log_level=StrEnvironmentVariable(
         required=True, env_name="LOG_LEVEL", value="INFO", description=("")
     ),
+    linking_session_return_url=StrEnvironmentVariable(
+        required=True, env_name="LINKING_SESSION_RETURN_URL", description=("")
+    )
 )
 
 
@@ -216,6 +220,7 @@ class RuntimeConfig(ServiceBaseModel):
     orcid_authorization_retirement_age: int = Field(...)
 
     linking_session_lifetime: int = Field(...)
+    linking_session_return_url: str = Field(...)
 
     mongo_host: str = Field(...)
     mongo_port: int = Field(...)
@@ -282,6 +287,9 @@ class ServiceConfig:
             ),
             linking_session_lifetime=self.get_int_environment_variable(
                 INT_CONSTANT_DEFAULTS.linking_session_lifetime
+            ),
+            linking_session_return_url=self.get_str_environment_variable(
+                STR_ENVIRONMENT_VARIABLE_DEFAULTS.linking_session_return_url
             ),
             mongo_host=self.get_str_environment_variable(
                 STR_ENVIRONMENT_VARIABLE_DEFAULTS.mongo_host

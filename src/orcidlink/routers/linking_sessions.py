@@ -61,7 +61,7 @@ RETURN_LINK_QUERY = Query(
     + "not to be confused with the ORCID OAuth flow's redirect_url",
 )
 SKIP_PROMPT_QUERY = Query(
-    default=None, description="Whether to prompt for confirmation of linking"
+    default=False, description="Whether to prompt for confirmation of linking"
 )
 
 UI_OPTIONS_QUERY = Query(default="", description="Opaque string of ui options")
@@ -196,6 +196,18 @@ async def start_linking_session(
 
     _, token_info = await ensure_authorization_ui(authorization)
 
+    log_info(
+        "Starting start_linking_session",
+        "start",
+        {
+            "params": {
+                "DEBUG": "HERE 1",
+                "session_id": session_id,
+                "token_info": token_info
+            }
+        },
+    )
+
     # We don't need the record, but we want to ensure it exists
     # and is owned by this user.
     try:
@@ -203,12 +215,50 @@ async def start_linking_session(
     except JSONRPCError as je:
         raise UIError(je.CODE, je.MESSAGE)
 
+    log_info(
+        "Starting start_linking_session",
+        "start",
+        {
+            "params": {
+                "DEBUG": "HERE 2",
+                
+                "session_id": session_id,
+                "token_info": token_info, 
+                "return_link": return_link,
+                "skip_prompt": skip_prompt,
+                "ui_option": ui_options
+            }
+        },
+    )
+
     # TODO: enhance session record to record the status - so that we can prevent
     # starting a session twice!
 
     model = storage_model()
-    await model.update_linking_session_to_started(
-        session_id, return_link, skip_prompt, ui_options
+    try:
+        await model.update_linking_session_to_started(
+            session_id, return_link, skip_prompt, ui_options
+        )
+    except Exception as ex:
+        log_info(
+            "Starting start_linking_session",
+            "start",
+            {
+                "params": {
+                    "DEBUG": "HERE 3",
+                    "error": str(ex)
+                }
+            },
+        )
+
+    log_info(
+        "Starting start_linking_session",
+        "start",
+        {
+            "params": {
+                "DEBUG": "HERE 4"
+            }
+        },
     )
 
     # The redirect uri is back to ourselves ... this completes the interaction with
@@ -227,6 +277,9 @@ async def start_linking_session(
         prompt="login",
         state=json.dumps({"session_id": session_id}),
     )
+    # see
+    # https://info.orcid.org/documentation/integration-guide/customizing-the-sign-in-register-screen/#Optionally_force_sign-out
+    # +++
     url = f"{config().orcid_oauth_base_url}/authorize?{urlencode(params.model_dump())}"
 
     log_info(
@@ -335,7 +388,6 @@ async def linking_sessions_continue(
     #
 
     if error is not None:
-        # return ui_error_response(errors.ERRORS.linking_session_error, error)
         raise UIError(
             UpstreamError.CODE,
             "Error returned by ORCID OAuth",
@@ -346,19 +398,11 @@ async def linking_sessions_continue(
         raise UIError(
             InvalidParams.CODE, "The 'code' query param is required but missing"
         )
-        # return ui_error_response(
-        #     errors.ERRORS.linking_session_continue_invalid_param,
-        #     "The 'code' query param is required but missing",
-        # )
 
     if state is None:
         raise UIError(
             InvalidParams.CODE, "The 'state' query param is required but missing"
         )
-        # return ui_error_response(
-        #     errors.ERRORS.linking_session_continue_invalid_param,
-        #     "The 'state' query param is required but missing",
-        # )
 
     unpacked_state = json.loads(state)
 
@@ -367,10 +411,6 @@ async def linking_sessions_continue(
             InvalidParams.CODE,
             "The 'session_id' was not provided in the 'state' query param",
         )
-        # return ui_error_response(
-        #     errors.ERRORS.linking_session_continue_invalid_param,
-        #     "The 'session_id' was not provided in the 'state' query param",
-        # )
 
     session_id = unpacked_state.get("session_id")
 
@@ -406,10 +446,6 @@ async def linking_sessions_continue(
         await model.delete_linking_session_started(session_id)
 
         # TODO: send the orcid in case the user wants to investigate?
-        # return ui_error_response(
-        #     errors.ERRORS.linking_session_already_linked_orcid,
-        #     "The chosen ORCID account is already linked to another KBase account",
-        # )
         raise UIError(
             AlreadyLinkedError.CODE,
             ("The chosen ORCID account is already linked to another " "KBase account"),
@@ -438,7 +474,9 @@ async def linking_sessions_continue(
     params["skip_prompt"] = "true" if session_record.skip_prompt else "false"
     params["ui_options"] = session_record.ui_options
 
-    url = f"{config().ui_origin}?{urlencode(params)}#orcidlink/continue/{session_id}"
+    # url =
+    # f"{config().ui_origin}?{urlencode(params)}#orcidlink/continue/{session_id}"
+    url = f"{config().linking_session_return_url}/{session_id}?{urlencode(params)}"
 
     log_info(
         "Successfully continued linking session", "success", {"redirection_url": url}

@@ -27,7 +27,7 @@ RETURN_LINK_QUERY = Query(
     + "not to be confused with the ORCID OAuth flow's redirect_url",
 )
 SKIP_PROMPT_QUERY = Query(
-    default=None, description="Whether to prompt for confirmation of linking"
+    default=False, description="Whether to prompt for confirmation of linking"
 )
 
 UI_OPTIONS_QUERY = Query(default="", description="Opaque string of ui options")

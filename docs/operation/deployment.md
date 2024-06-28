@@ -78,7 +78,7 @@ kbase/kbase-service-orcidlink:1.2.3
 - KBase auth service
 - ORCID API
 - ORCID OAuth
-- mongodb - version 3.6.13
+- mongodb - version 7.0.9
 
 ### Auth Service
 

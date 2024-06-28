@@ -22,5 +22,6 @@ services:
       - MONGO_DATABASE
       - MONGO_USERNAME
       - MONGO_PASSWORD
+      - LINKING_SESSION_RETURN_URL
     command:
       - bash

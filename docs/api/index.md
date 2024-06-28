@@ -137,7 +137,7 @@ access_token stored at KBase for future use by the user.
 
 <a name="header_input"></a>
 #### Input
-<table><thead><tr><th colspan="4"><img width="2000px"></th></tr><tr><th><img width="150px"></th><th><img width="1000px"></th><th><img width="150px"></th><th><img width="150px"></th><tr><th>Name</th><th>Description</th><th>Type</th><th>In</th></tr></thead><tbody><tr><td>session_id</td><td>The linking session id</td><td>string</td><td>path</td></tr><tr><td>return_link</td><td>A url to redirect to after the entire linking is complete; not to be confused with the ORCID OAuth flow's redirect_url</td><td>n/a</td><td>query</td></tr><tr><td>skip_prompt</td><td>Whether to prompt for confirmation of linking</td><td>boolean</td><td>query</td></tr><tr><td>ui_options</td><td>Opaque string of ui options</td><td>string</td><td>query</td></tr><tr><td>kbase_session</td><td>KBase auth token taken from a cookie named 'kbase_session'</td><td>string</td><td>cookie</td></tr><tr><td>kbase_session_backup</td><td>KBase auth token taken from a cookie named 'kbase_session_backup. Required in the KBase production environment since the prod ui and services operate on different hosts; the primary cookie, kbase_session, is host-based so cannot be read by a prod service.</td><td>string</td><td>cookie</td></tr></tbody></table>
+<table><thead><tr><th colspan="4"><img width="2000px"></th></tr><tr><th><img width="150px"></th><th><img width="1000px"></th><th><img width="150px"></th><th><img width="150px"></th><tr><th>Name</th><th>Description</th><th>Type</th><th>In</th></tr></thead><tbody><tr><td>session_id</td><td>The linking session id</td><td>string</td><td>path</td></tr><tr><td>return_link</td><td>A url to redirect to after the entire linking is complete; not to be confused with the ORCID OAuth flow's redirect_url</td><td>n/a</td><td>query</td></tr><tr><td>skip_prompt</td><td>Whether to prompt for confirmation of linking</td><td>boolean</td><td>query</td></tr><tr><td>ui_options</td><td>Opaque string of ui options</td><td>string</td><td>query</td></tr><tr><td>kbase_session</td><td>KBase auth token taken from a cookie named 'kbase_session'</td><td>n/a</td><td>cookie</td></tr><tr><td>kbase_session_backup</td><td>KBase auth token taken from a cookie named 'kbase_session_backup. Required in the KBase production environment since the prod ui and services operate on different hosts; the primary cookie, kbase_session, is host-based so cannot be read by a prod service.</td><td>n/a</td><td>cookie</td></tr></tbody></table>
 
 
 <a name="header_output"></a>
@@ -163,7 +163,7 @@ encountered, it redirects to an error viewing endpoint in kbase-ui.
 
 <a name="header_input"></a>
 #### Input
-<table><thead><tr><th colspan="4"><img width="2000px"></th></tr><tr><th><img width="150px"></th><th><img width="1000px"></th><th><img width="150px"></th><th><img width="150px"></th><tr><th>Name</th><th>Description</th><th>Type</th><th>In</th></tr></thead><tbody><tr><td>code</td><td>For a success case, contains an OAuth exchange code parameter</td><td>n/a</td><td>query</td></tr><tr><td>state</td><td>For a success case, contains an OAuth state parameter</td><td>n/a</td><td>query</td></tr><tr><td>error</td><td>For an error case, contains an error code parameter</td><td>n/a</td><td>query</td></tr><tr><td>kbase_session</td><td>KBase auth token taken from a cookie named 'kbase_session'</td><td>string</td><td>cookie</td></tr><tr><td>kbase_session_backup</td><td>KBase auth token taken from a cookie named 'kbase_session_backup. Required in the KBase production environment since the prod ui and services operate on different hosts; the primary cookie, kbase_session, is host-based so cannot be read by a prod service.</td><td>string</td><td>cookie</td></tr></tbody></table>
+<table><thead><tr><th colspan="4"><img width="2000px"></th></tr><tr><th><img width="150px"></th><th><img width="1000px"></th><th><img width="150px"></th><th><img width="150px"></th><tr><th>Name</th><th>Description</th><th>Type</th><th>In</th></tr></thead><tbody><tr><td>code</td><td>For a success case, contains an OAuth exchange code parameter</td><td>n/a</td><td>query</td></tr><tr><td>state</td><td>For a success case, contains an OAuth state parameter</td><td>n/a</td><td>query</td></tr><tr><td>error</td><td>For an error case, contains an error code parameter</td><td>n/a</td><td>query</td></tr><tr><td>kbase_session</td><td>KBase auth token taken from a cookie named 'kbase_session'</td><td>n/a</td><td>cookie</td></tr><tr><td>kbase_session_backup</td><td>KBase auth token taken from a cookie named 'kbase_session_backup. Required in the KBase production environment since the prod ui and services operate on different hosts; the primary cookie, kbase_session, is host-based so cannot be read by a prod service.</td><td>n/a</td><td>cookie</td></tr></tbody></table>
 
 
 <a name="header_output"></a>
@@ -264,70 +264,70 @@ alphabetically, which is fine for looking them up, but not for their relationshi
 <a name="header_type__errorresponse_authorizationrequirederror_"></a>
 ##### _ErrorResponse_AuthorizationRequiredError_
 
-<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td><div><i>Const</i></div><table><tr><th>const</th><td>2.0</td></tr><tr><th>title</th><td>Jsonrpc</td></tr><tr><th>default</th><td>2.0</td></tr><tr><th>example</th><td>2.0</td></tr></table></td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>error</td><td><a href="#user-content-header_type_authorizationrequirederror">AuthorizationRequiredError</a></td><td>✓</td></tr></tbody></table>
+<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td>string</td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>error</td><td><a href="#user-content-header_type_authorizationrequirederror">AuthorizationRequiredError</a></td><td>✓</td></tr></tbody></table>
 
 
 
 <a name="header_type__errorresponse_internalerror_"></a>
 ##### _ErrorResponse_InternalError_
 
-<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td><div><i>Const</i></div><table><tr><th>const</th><td>2.0</td></tr><tr><th>title</th><td>Jsonrpc</td></tr><tr><th>default</th><td>2.0</td></tr><tr><th>example</th><td>2.0</td></tr></table></td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>error</td><td><a href="#user-content-header_type_internalerror">InternalError</a></td><td>✓</td></tr></tbody></table>
+<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td>string</td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>error</td><td><a href="#user-content-header_type_internalerror">InternalError</a></td><td>✓</td></tr></tbody></table>
 
 
 
 <a name="header_type__errorresponse_invalidparams_"></a>
 ##### _ErrorResponse_InvalidParams_
 
-<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td><div><i>Const</i></div><table><tr><th>const</th><td>2.0</td></tr><tr><th>title</th><td>Jsonrpc</td></tr><tr><th>default</th><td>2.0</td></tr><tr><th>example</th><td>2.0</td></tr></table></td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>error</td><td><a href="#user-content-header_type_invalidparams">InvalidParams</a></td><td>✓</td></tr></tbody></table>
+<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td>string</td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>error</td><td><a href="#user-content-header_type_invalidparams">InvalidParams</a></td><td>✓</td></tr></tbody></table>
 
 
 
 <a name="header_type__errorresponse_invalidrequest_"></a>
 ##### _ErrorResponse_InvalidRequest_
 
-<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td><div><i>Const</i></div><table><tr><th>const</th><td>2.0</td></tr><tr><th>title</th><td>Jsonrpc</td></tr><tr><th>default</th><td>2.0</td></tr><tr><th>example</th><td>2.0</td></tr></table></td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>error</td><td><a href="#user-content-header_type_invalidrequest">InvalidRequest</a></td><td>✓</td></tr></tbody></table>
+<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td>string</td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>error</td><td><a href="#user-content-header_type_invalidrequest">InvalidRequest</a></td><td>✓</td></tr></tbody></table>
 
 
 
 <a name="header_type__errorresponse_methodnotfound_"></a>
 ##### _ErrorResponse_MethodNotFound_
 
-<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td><div><i>Const</i></div><table><tr><th>const</th><td>2.0</td></tr><tr><th>title</th><td>Jsonrpc</td></tr><tr><th>default</th><td>2.0</td></tr><tr><th>example</th><td>2.0</td></tr></table></td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>error</td><td><a href="#user-content-header_type_methodnotfound">MethodNotFound</a></td><td>✓</td></tr></tbody></table>
+<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td>string</td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>error</td><td><a href="#user-content-header_type_methodnotfound">MethodNotFound</a></td><td>✓</td></tr></tbody></table>
 
 
 
 <a name="header_type__errorresponse_notauthorizederror_"></a>
 ##### _ErrorResponse_NotAuthorizedError_
 
-<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td><div><i>Const</i></div><table><tr><th>const</th><td>2.0</td></tr><tr><th>title</th><td>Jsonrpc</td></tr><tr><th>default</th><td>2.0</td></tr><tr><th>example</th><td>2.0</td></tr></table></td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>error</td><td><a href="#user-content-header_type_notauthorizederror">NotAuthorizedError</a></td><td>✓</td></tr></tbody></table>
+<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td>string</td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>error</td><td><a href="#user-content-header_type_notauthorizederror">NotAuthorizedError</a></td><td>✓</td></tr></tbody></table>
 
 
 
 <a name="header_type__errorresponse_notfounderror_"></a>
 ##### _ErrorResponse_NotFoundError_
 
-<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td><div><i>Const</i></div><table><tr><th>const</th><td>2.0</td></tr><tr><th>title</th><td>Jsonrpc</td></tr><tr><th>default</th><td>2.0</td></tr><tr><th>example</th><td>2.0</td></tr></table></td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>error</td><td><a href="#user-content-header_type_notfounderror">NotFoundError</a></td><td>✓</td></tr></tbody></table>
+<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td>string</td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>error</td><td><a href="#user-content-header_type_notfounderror">NotFoundError</a></td><td>✓</td></tr></tbody></table>
 
 
 
 <a name="header_type__errorresponse_parseerror_"></a>
 ##### _ErrorResponse_ParseError_
 
-<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td><div><i>Const</i></div><table><tr><th>const</th><td>2.0</td></tr><tr><th>title</th><td>Jsonrpc</td></tr><tr><th>default</th><td>2.0</td></tr><tr><th>example</th><td>2.0</td></tr></table></td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>error</td><td><a href="#user-content-header_type_parseerror">ParseError</a></td><td>✓</td></tr></tbody></table>
+<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td>string</td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>error</td><td><a href="#user-content-header_type_parseerror">ParseError</a></td><td>✓</td></tr></tbody></table>
 
 
 
 <a name="header_type__request"></a>
 ##### _Request
 
-<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td><div><i>Const</i></div><table><tr><th>const</th><td>2.0</td></tr><tr><th>title</th><td>Jsonrpc</td></tr><tr><th>default</th><td>2.0</td></tr><tr><th>example</th><td>2.0</td></tr></table></td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>method</td><td>string</td><td>✓</td></tr><tr><td>params</td><td>object</td><td></td></tr></tbody></table>
+<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td>string</td><td></td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td></td></tr><tr><td>method</td><td>string</td><td>✓</td></tr><tr><td>params</td><td>object</td><td></td></tr></tbody></table>
 
 
 
 <a name="header_type__response"></a>
 ##### _Response
 
-<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td><div><i>Const</i></div><table><tr><th>const</th><td>2.0</td></tr><tr><th>title</th><td>Jsonrpc</td></tr><tr><th>default</th><td>2.0</td></tr><tr><th>example</th><td>2.0</td></tr></table></td><td>✓</td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td>✓</td></tr><tr><td>result</td><td>object</td><td>✓</td></tr></tbody></table>
+<table><thead><tr><th colspan="3"><img width="2000px"></th></tr><tr><th><img width="1000px"></th><th><img width="200px"></th><th><img width="75px"></th><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody><tr><td>jsonrpc</td><td>string</td><td>✓</td></tr><tr><td>id</td><td><div><i>Any Of</i></div><div>string</div><div>integer</div></td><td>✓</td></tr><tr><td>result</td><td>object</td><td>✓</td></tr></tbody></table>
 
 
 

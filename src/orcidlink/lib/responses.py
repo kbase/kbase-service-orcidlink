@@ -1,3 +1,4 @@
+import json
 from typing import Any, Dict, List, Mapping, Optional, Union
 from urllib.parse import urlencode
 
@@ -111,12 +112,15 @@ def ui_error_response(
     code: int, message: str, data: Optional[Any] = None
 ) -> RedirectResponse:
     raw_error = {"code": code, "message": message}
+
+    # The data from an error may be arbitrary data - it means something to the
+    # specific error
     if data is not None:
-        raw_error["data"] = data
+        raw_error["data"] = json.dumps(data)
 
     error_params = urlencode(raw_error)
     return RedirectResponse(
-        f"{config().ui_origin}?{error_params}#orcidlink/error", status_code=302
+        f"{config().ui_origin}/orcidlink/error?{error_params}", status_code=302
     )
 
 

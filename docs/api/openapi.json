@@ -198,7 +198,14 @@
                         "in": "cookie",
                         "required": false,
                         "schema": {
-                            "type": "string",
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
                             "description": "KBase auth token taken from a cookie named 'kbase_session'",
                             "title": "Kbase Session"
                         },
@@ -209,7 +216,14 @@
                         "in": "cookie",
                         "required": false,
                         "schema": {
-                            "type": "string",
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
                             "description": "KBase auth token taken from a cookie named 'kbase_session_backup. Required in the KBase production environment since the prod ui and services operate on different hosts; the primary cookie, kbase_session, is host-based so cannot be read by a prod service.",
                             "title": "Kbase Session Backup"
                         },
@@ -297,7 +311,14 @@
                         "in": "cookie",
                         "required": false,
                         "schema": {
-                            "type": "string",
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
                             "description": "KBase auth token taken from a cookie named 'kbase_session'",
                             "title": "Kbase Session"
                         },
@@ -308,7 +329,14 @@
                         "in": "cookie",
                         "required": false,
                         "schema": {
-                            "type": "string",
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
                             "description": "KBase auth token taken from a cookie named 'kbase_session_backup. Required in the KBase production environment since the prod ui and services operate on different hosts; the primary cookie, kbase_session, is host-based so cannot be read by a prod service.",
                             "title": "Kbase Session Backup"
                         },
@@ -587,6 +615,10 @@
             "_ErrorResponse_AuthorizationRequiredError_": {
                 "properties": {
                     "jsonrpc": {
+                        "type": "string",
+                        "enum": [
+                            "2.0"
+                        ],
                         "const": "2.0",
                         "title": "Jsonrpc",
                         "default": "2.0",
@@ -618,6 +650,10 @@
             "_ErrorResponse_InternalError_": {
                 "properties": {
                     "jsonrpc": {
+                        "type": "string",
+                        "enum": [
+                            "2.0"
+                        ],
                         "const": "2.0",
                         "title": "Jsonrpc",
                         "default": "2.0",
@@ -649,6 +685,10 @@
             "_ErrorResponse_InvalidParams_": {
                 "properties": {
                     "jsonrpc": {
+                        "type": "string",
+                        "enum": [
+                            "2.0"
+                        ],
                         "const": "2.0",
                         "title": "Jsonrpc",
                         "default": "2.0",
@@ -680,6 +720,10 @@
             "_ErrorResponse_InvalidRequest_": {
                 "properties": {
                     "jsonrpc": {
+                        "type": "string",
+                        "enum": [
+                            "2.0"
+                        ],
                         "const": "2.0",
                         "title": "Jsonrpc",
                         "default": "2.0",
@@ -711,6 +755,10 @@
             "_ErrorResponse_MethodNotFound_": {
                 "properties": {
                     "jsonrpc": {
+                        "type": "string",
+                        "enum": [
+                            "2.0"
+                        ],
                         "const": "2.0",
                         "title": "Jsonrpc",
                         "default": "2.0",
@@ -742,6 +790,10 @@
             "_ErrorResponse_NotAuthorizedError_": {
                 "properties": {
                     "jsonrpc": {
+                        "type": "string",
+                        "enum": [
+                            "2.0"
+                        ],
                         "const": "2.0",
                         "title": "Jsonrpc",
                         "default": "2.0",
@@ -773,6 +825,10 @@
             "_ErrorResponse_NotFoundError_": {
                 "properties": {
                     "jsonrpc": {
+                        "type": "string",
+                        "enum": [
+                            "2.0"
+                        ],
                         "const": "2.0",
                         "title": "Jsonrpc",
                         "default": "2.0",
@@ -804,6 +860,10 @@
             "_ErrorResponse_ParseError_": {
                 "properties": {
                     "jsonrpc": {
+                        "type": "string",
+                        "enum": [
+                            "2.0"
+                        ],
                         "const": "2.0",
                         "title": "Jsonrpc",
                         "default": "2.0",
@@ -835,6 +895,10 @@
             "_Request": {
                 "properties": {
                     "jsonrpc": {
+                        "type": "string",
+                        "enum": [
+                            "2.0"
+                        ],
                         "const": "2.0",
                         "title": "Jsonrpc",
                         "default": "2.0",
@@ -871,6 +935,10 @@
             "_Response": {
                 "properties": {
                     "jsonrpc": {
+                        "type": "string",
+                        "enum": [
+                            "2.0"
+                        ],
                         "const": "2.0",
                         "title": "Jsonrpc",
                         "default": "2.0",

@@ -38,7 +38,7 @@ services:
       - mongo
     command: [ "scripts/start-server.sh" ]
   mongo:
-    image: mongo:3.6.13
+    image: mongo:7.0.9
     restart: always
     networks:
       - kbase-dev

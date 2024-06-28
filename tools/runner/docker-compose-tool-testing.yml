@@ -13,7 +13,7 @@ services:
     depends_on:
       - mongo
   mongo:
-    image: mongo:3.6.13
+    image: mongo:7.0.9
     restart: always
     volumes:
       - ./tools/scripts/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/

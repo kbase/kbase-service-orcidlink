@@ -197,12 +197,10 @@ def assert_ui_error_response(response: Response, expected_error_code: int) -> No
     location_value = response.headers.get("location")
     assert location_value is not None
 
-    assert location_value.endswith("#orcidlink/error")
     url = urlparse(response.headers.get("location"))
     assert url.scheme == "http"
-    assert url.path == ""
     assert url.hostname == "127.0.0.1"
-    assert url.fragment == "orcidlink/error"
+    assert url.path == "/orcidlink/error"
     # assert url.query
     # annoyingly, may be string or bytes, so coerce, primarily to make
     # typing happy.

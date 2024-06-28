@@ -52,18 +52,27 @@ need for a command, as the default entrypoint and command are adequate.
 These environment variables do not have a default value so must be set before the
 service is started.
 
-| Name                 | Type | Description                                                                            | Example                              |
-|----------------------|------|----------------------------------------------------------------------------------------|--------------------------------------|
-| KBASE_ENDPOINT       | str  | The base url for service calls in the current deployment environment. [1](#footnote-1) | <https://ci.kbase.us/services/>      |
-| MONGO_USERNAME       | str  | The username for the mongo database used by the orcidlink service                      | orcidlink_user                       |
-| MONGO_PASSWORD       | str  | The password associated with the MONGO_USERNAME                                        | secret_password                      |
-| ORCID_API_BASE_URL   | str  | The base url to use for calls to the ORCID API                                         | <https://api.sandbox.orcid.org/v3.0> |
-| ORCID_OAUTH_BASE_URL | str  | The base url to use for calls to the ORCID OAuth API                                   | <https://sandbox.orcid.org/oauth>    |
-| ORCID_SITE_BASE_URL  | str  | The base url to use for Links to the ORCID site                                        | <https://sandbox.orcid.org>          |
-| ORCID_CLIENT_ID      | str  | The "client id" assigned by ORCID to  KBase for using with ORCID APIs                  |                                      |
-| ORCID_CLIENT_SECRET  | str  | The "client secret" assigned by ORCID to KBase for using with ORCID APIs               |                                      |
+| Name                       | Type | Description                                                                            | Example                                      |
+|----------------------------|------|----------------------------------------------------------------------------------------|----------------------------------------------|
+| KBASE_ENDPOINT             | str  | The base url for service calls in the current deployment environment. [1](#footnote-1) | <https://ci.kbase.us/services/>              |
+| MONGO_USERNAME             | str  | The username for the mongo database used by the orcidlink service                      | orcidlink_user                               |
+| MONGO_PASSWORD             | str  | The password associated with the MONGO_USERNAME                                        | secret_password                              |
+| ORCID_API_BASE_URL         | str  | The base url to use for calls to the ORCID API                                         | <https://api.sandbox.orcid.org/v3.0>         |
+| ORCID_OAUTH_BASE_URL       | str  | The base url to use for calls to the ORCID OAuth API                                   | <https://sandbox.orcid.org/oauth>            |
+| ORCID_SITE_BASE_URL        | str  | The base url to use for Links to the ORCID site                                        | <https://sandbox.orcid.org>                  |
+| ORCID_CLIENT_ID            | str  | The "client id" assigned by ORCID to  KBase for using with ORCID APIs                  |                                              |
+| ORCID_CLIENT_SECRET        | str  | The "client secret" assigned by ORCID to KBase for using with ORCID APIs               |                                              |
+| LINKING_SESSION_RETURN_URL | str  | The full url to the url to return to after finishing [2](#footnote-2)                  | <https://ci.kbase.us/orcidlink/linkcontinue> |
 
-<span id="footnote-1">[1]</span>  Note that it includes the "services" path and traditionall ends with a forward slash "/", although the service doesn't need it.
+<span id="footnote-1">[1]</span>  Note that it includes the "services" path and
+traditionally ends with a forward slash "/", although the service doesn't need
+it.
+
+<span id="footnote-2">[1]</span>  This was added during co-development with
+Europa, in order to facilitate easily switching back and forth between Europa
+and kbase-ui. However, that is now moot, and it should be factored out. The line
+where it is used in linking_sessions.py has the original implementation
+commented out.
 
 ### Optional but recommended
 

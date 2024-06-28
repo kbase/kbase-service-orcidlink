@@ -1,4 +1,4 @@
-FROM python:3.12.2-slim-bookworm
+FROM python:3.12.4-slim-bookworm
 # Note that the python version needs to match that used to create
 # poetry.lock.
 

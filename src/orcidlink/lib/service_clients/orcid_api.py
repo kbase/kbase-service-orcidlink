@@ -486,8 +486,10 @@ class ORCIDEmploymentSummary(ServiceBaseModel):
     )
     source: ORCIDSource
     put_code: int = Field(validation_alias="put-code", serialization_alias="put-code")
-    department_name: str = Field(
-        ..., validation_alias="department-name", serialization_alias="department-name"
+    department_name: Optional[str] = Field(
+        default=None,
+        validation_alias="department-name",
+        serialization_alias="department-name",
     )
     role_title: str = Field(
         validation_alias="role-title", serialization_alias="role-title"

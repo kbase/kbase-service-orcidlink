@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out GitHub Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Run type checks via pyright
         run: ./Taskfile pyright

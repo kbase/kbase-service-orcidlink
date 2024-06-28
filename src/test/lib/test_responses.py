@@ -89,12 +89,10 @@ def test_ui_error_response(fake_fs):
         assert "location" in value.headers
         location_value = value.headers.get("location")
         assert location_value is not None
-        assert location_value.endswith("#orcidlink/error")
-        url = urlparse(value.headers.get("location"))
+        url = urlparse(location_value)
         assert url.scheme == "http"
-        assert url.path == ""
         assert url.hostname == "127.0.0.1"
-        assert url.fragment == "orcidlink/error"
+        assert url.path == "/orcidlink/error"
         # assert url.query
         # annoyingly, may be string or bytes, so coerce, primarily to make
         # typing happy.

@@ -9,7 +9,6 @@ if [ $exit_code != 0 ]; then
   exit 1
 fi
 
-
 #
 # Run initialization script.
 # This script will carry out various tasks to ensure a good environment.

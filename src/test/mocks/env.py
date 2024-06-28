@@ -17,4 +17,5 @@ TEST_ENV = {
     "ORCID_SITE_BASE_URL": "https://sandbox.orcid.org",
     "ORCID_CLIENT_ID": "REDACTED-CLIENT-ID",
     "ORCID_CLIENT_SECRET": "REDACTED-CLIENT-SECRET",
+    "LINKING_SESSION_RETURN_URL": "https://ci.kbase.us/orcidlink/linkcontinue",
 }
